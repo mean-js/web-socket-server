@@ -1,17 +1,10 @@
 var moment = require("moment");
 const http = require('http');
+const url = require("url");
 const WebSocket = require('ws');
 
-function WsRoute(app) {
-    const server = http.createServer(app);
+function WsRoute(server) {
     const wss = new WebSocket.Server({ server });
-
-
-    app.get("/ws", function(req, res, next) {
-        var resobj = { "title": "Affixus WS", "ts": moment().toDate() };
-        res.json(resobj);
-    });
-
 
     wss.on('connection', function connection(ws, req) {
         const location = url.parse(req.url, true);
